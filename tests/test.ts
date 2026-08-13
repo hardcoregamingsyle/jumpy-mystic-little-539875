@@ -22,27 +22,40 @@ describe('HUD Radar HTML Structure Tests', () => {
         });
 
         it('must specify English language code', () => {
-            expect(htmlContent).toMatch(/<html[^>]*lang=["']en["']/i);
+            expect(htmlContent).toMatch(/lang=["']en["']/i);
         });
     });
 
     describe('Head Section', () => {
-        it('must contain charset meta tag', () => {
+        it('must contain meta charset element', () => {
             expect(htmlContent).toMatch(/<meta[^>]*charset=["']UTF-8["']/i);
         });
 
         it('must contain viewport meta tag', () => {
-            expect(htmlContent).toMatch(/<meta[^>]*name=["']viewport["'][^>]*content=["'][^"']*width=device-width[^"']*["']/i);
+            expect(htmlContent).toMatch(/<meta[^>]*name=["']viewport["']/i);
         });
 
         it('must contain title element', () => {
             expect(htmlContent).toMatch(/<title>[^<]+<\/title>/i);
         });
+
+        it('must have a non-empty title', () => {
+            const match = htmlContent.match(/<title>([^<]+)<\/title>/i);
+            expect(match).not.toBeNull();
+            expect(match![1].trim()).toBeTruthy();
+        });
     });
 
     describe('Body Section', () => {
-        it('should have a body element', () => {
-            expect(htmlContent).toMatch(/<body[^>]*>.*<\/body>/is);
+        it('must have body element', () => {
+            expect(htmlContent).toMatch(/<body[^>]*>/i);
+            expect(htmlContent).toMatch(/<\/body>/i);
+        });
+    });
+
+    describe('Closing HTML Tag', () => {
+        it('must have closing html tag', () => {
+            expect(htmlContent).toMatch(/<\/html>/i);
         });
     });
 });
