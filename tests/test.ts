@@ -22,7 +22,23 @@ describe('HUD Radar HTML Structure Tests', () => {
         });
 
         it('must specify English language code', () => {
-     
+            expect(htmlContent).toMatch(/lang="en"/i);
+        });
+    });
+
+    describe('Meta Tags', () => {
+        it('must have charset meta tag with UTF-8', () => {
+            expect(htmlContent).toMatch(/<meta[^>]*charset="UTF-8"/i);
+        });
+
+        it('must have viewport meta tag', () => {
+            expect(htmlContent).toMatch(/<meta[^>]*name="viewport"/i);
+        });
+    });
+
+    describe('Title', () => {
+        it('must have a title element', () => {
+            expect(htmlContent).toMatch(/<title>.*<\/title>/i);
         });
     });
 });
