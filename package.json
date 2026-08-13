@@ -2,7 +2,7 @@
   "name": "stealth-bomber-hud",
   "version": "1.0.0",
   "description": "Real-time interactive HUD and 3D radar visualization using Three.js",
-  "main": "index.html",
+  "main": "src/index.html",
   "scripts": {
     "test": "jest --coverage",
     "test:watch": "jest --watch",
