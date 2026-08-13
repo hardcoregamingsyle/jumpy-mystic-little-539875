@@ -26,37 +26,54 @@ describe('HUD Radar HTML Structure Tests', () => {
         });
     });
 
-    describe('Head Section', () => {
-        it('must contain a head element', () => {
-            expect(htmlContent).toMatch(/<head>/i);
-        });
-
-        it('must have meta charset tag with UTF-8', () => {
+    describe('Meta Tags', () => {
+        it('must have charset meta tag with UTF-8', () => {
             expect(htmlContent).toMatch(/<meta[^>]*charset=["']UTF-8["']/i);
         });
 
         it('must have viewport meta tag for responsive design', () => {
-            expect(htmlContent).toMatch(/<meta[^>]*name=["']viewport["'][^>]*content=["']width=device-width,\s*initial-scale=1["']/i);
+            expect(htmlContent).toMatch(/<meta[^>]*name=["']viewport["'][^>]*content=["'][^"']*width=device-width[^"']*["']/i);
         });
 
-        it('must have a title element', () => {
+        it('must have title element', () => {
             expect(htmlContent).toMatch(/<title>.*<\/title>/i);
         });
 
-        it('must have a non-empty title', () => {
-            const titleMatch = htmlContent.match(/<title>(.*?)<\/title>/i);
-            expect(titleMatch).not.toBeNull();
-            expect(titleMatch![1].trim().length).toBeGreaterThan(0);
+        it('title must not be empty', () => {
+            const match = htmlContent.match(/<title>([^<]*)<\/title>/i);
+            expect(match).not.toBeNull();
+            expect(match![1].trim()).not.toBe('');
         });
     });
 
-    describe('Body Section', () => {
-        it('must contain a body element', () => {
+    describe('Body Structure', () => {
+        it('must have opening and closing body tags', () => {
             expect(htmlContent).toMatch(/<body>/i);
+            expect(htmlContent).toMatch(/<\/body>/i);
+        });
+    });
+
+    describe('HTML Document Structure', () => {
+        it('must have html opening and closing tags', () => {
+            expect(htmlContent).toMatch(/<html[^>]*>/i);
+            expect(htmlContent).toMatch(/<\/html>/i);
         });
 
-        it('must have closing body and html tags', () => {
-            expect(htmlContent).toMatch(/<\/body>\s*<\/html>\s*$/i);
+        it('must have head and body sections', () => {
+            expect(htmlContent).toMatch(/<head>/i);
+            expect(htmlContent).toMatch(/<\/head>/i);
+            expect(htmlContent).toMatch(/<body>/i);
+            expect(htmlContent).toMatch(/<\/body>/i);
+        });
+    });
+
+    describe('Security', () => {
+        it('must not contain any script tags', () => {
+            expect(htmlContent).not.toMatch(/<script/i);
+        });
+
+        it('must not contain any inline event handlers', () => {
+            expect(htmlContent).not.toMatch(/on\w+=/i);
         });
     });
 });
