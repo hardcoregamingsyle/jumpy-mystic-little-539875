@@ -22,29 +22,41 @@ describe('HUD Radar HTML Structure Tests', () => {
         });
 
         it('must specify English language code', () => {
-            expect(htmlContent).toMatch(/lang="en"/i);
+            expect(htmlContent).toMatch(/lang=["']en["']/i);
         });
     });
 
     describe('Meta Tags', () => {
-        it('must have charset meta tag with UTF-8', () => {
-            expect(htmlContent).toMatch(/<meta[^>]*charset="UTF-8"/i);
+        it('must have charset UTF-8 meta tag', () => {
+            expect(htmlContent).toMatch(/<meta[^>]*charset=["']UTF-8["']/i);
         });
 
-        it('must have viewport meta tag for responsive design', () => {
-            expect(htmlContent).toMatch(/<meta[^>]*name="viewport"[^>]*content="width=device-width, initial-scale=1.0"/i);
+        it('must have viewport meta tag with width=device-width and initial-scale=1.0', () => {
+            expect(htmlContent).toMatch(/<meta[^>]*name=["']viewport["'][^>]*content=["']width=device-width,\s*initial-scale=1.0["']/i);
         });
     });
 
     describe('Title Element', () => {
-        it('must have a title element inside head', () => {
-            expect(htmlContent).toMatch(/<title>.*?<\/title>/i);
+        it('must have a title element', () => {
+            expect(htmlContent).toMatch(/<title>[^<]+<\/title>/i);
         });
 
         it('must have non-empty title content', () => {
             const match = htmlContent.match(/<title>([^<]+)<\/title>/i);
-            expect(match).toBeTruthy();
-            expect(match![1].trim().length).toBeGreaterThan(0);
+            expect(match).not.toBeNull();
+            if (match) {
+                expect(match[1].trim().length).toBeGreaterThan(0);
+            }
+        });
+    });
+
+    describe('Body Structure', () => {
+        it('must have opening and closing body tags', () => {
+            expect(htmlContent).toMatch(/<body>[\s\S]*<\/body>/i);
+        });
+
+        it('must have matching html closing tag', () => {
+            expect(htmlContent).toMatch(/<\/html>/i);
         });
     });
 });
