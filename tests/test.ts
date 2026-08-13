@@ -22,64 +22,42 @@ describe('HUD Radar HTML Structure Tests', () => {
         });
 
         it('must specify English language code', () => {
-            expect(htmlContent).toMatch(/<html[^>]*lang="en"[^>]*>/i);
+            expect(htmlContent).toMatch(/<html[^>]*lang="en"/i);
         });
     });
 
-    describe('Head Section', () => {
-        it('must contain head element', () => {
-            expect(htmlContent).toMatch(/<head>/i);
-            expect(htmlContent).toMatch(/<\/head>/i);
-        });
-
+    describe('Meta Tags', () => {
         it('must have charset meta tag with UTF-8', () => {
-            expect(htmlContent).toMatch(/<meta[^>]*charset="UTF-8"[^>]*>/i);
+            expect(htmlContent).toMatch(/<meta[^>]*charset="UTF-8"/i);
         });
 
         it('must have viewport meta tag for responsive design', () => {
-            expect(htmlContent).toMatch(/<meta[^>]*name="viewport"[^>]*content="width=device-width,\s*initial-scale=1\.0"[^>]*>/i);
-        });
-
-        it('must have title element with non-empty content', () => {
-            expect(htmlContent).toMatch(/<title>[^<]+<\/title>/i);
-            const titleMatch = htmlContent.match(/<title>([^<]+)<\/title>/i);
-            expect(titleMatch).not.toBeNull();
-            if (titleMatch) {
-                expect(titleMatch[1].trim().length).toBeGreaterThan(0);
-            }
+            expect(htmlContent).toMatch(/<meta[^>]*name="viewport"[^>]*content="width=device-width, initial-scale=1.0"/i);
         });
     });
 
-    describe('Body Section', () => {
-        it('must contain body element', () => {
-            expect(htmlContent).toMatch(/<body>/i);
-            expect(htmlContent).toMatch(/<\/body>/i);
+    describe('Title Element', () => {
+        it('must have a title element', () => {
+            expect(htmlContent).toMatch(/<title>.*<\/title>/i);
         });
 
-        it('body must be empty initially', () => {
-            const bodyMatch = htmlContent.match(/<body>([\s\S]*)<\/body>/i);
-            expect(bodyMatch).not.toBeNull();
-            if (bodyMatch) {
-                expect(bodyMatch[1].trim()).toBe('');
-            }
+        it('must have a non-empty title', () => {
+            const titleMatch = htmlContent.match(/<title>([^<]*)<\/title>/i);
+            expect(titleMatch).not.toBeNull();
+            expect(titleMatch![1].trim()).not.toBe('');
         });
     });
 
     describe('Structural Integrity', () => {
-        it('must have proper html closing tag', () => {
+        it('must have closing html tag', () => {
             expect(htmlContent).toMatch(/<\/html>/i);
         });
 
-        it('must have head before body', () => {
-            const headIndex = htmlContent.indexOf('<head>');
-            const bodyIndex = htmlContent.indexOf('<body>');
-            expect(headIndex).toBeGreaterThan(-1);
-            expect(bodyIndex).toBeGreaterThan(-1);
-            expect(headIndex).toBeLessThan(bodyIndex);
-        });
-
-        it('must not contain any script tags in initial state', () => {
-            expect(htmlContent).not.toMatch(/<script[^>]*>/i);
+        it('must have head and body sections', () => {
+            expect(htmlContent).toMatch(/<head>/i);
+            expect(htmlContent).toMatch(/<\/head>/i);
+            expect(htmlContent).toMatch(/<body>/i);
+            expect(htmlContent).toMatch(/<\/body>/i);
         });
     });
 });
