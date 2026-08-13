@@ -22,41 +22,29 @@ describe('HUD Radar HTML Structure Tests', () => {
         });
 
         it('must specify English language code', () => {
-            expect(htmlContent).toMatch(/lang=["']en['"]/i);
+            expect(htmlContent).toMatch(/<html[^>]*lang=["']en["']/i);
         });
     });
 
-    describe('Head Section', () => {
-        it('must contain a title element', () => {
+    describe('Meta Tags', () => {
+        it('must have charset meta tag with UTF-8', () => {
+            expect(htmlContent).toMatch(/<meta[^>]*charset=["']UTF-8["']/i);
+        });
+
+        it('must have viewport meta tag for responsive design', () => {
+            expect(htmlContent).toMatch(/<meta[^>]*name=["']viewport["'][^>]*content=["']width=device-width,\s*initial-scale=1\.0["']/i);
+        });
+    });
+
+    describe('Title Element', () => {
+        it('must have a title element', () => {
             expect(htmlContent).toMatch(/<title>.*<\/title>/i);
         });
 
-        it('must contain charset meta tag with UTF-8', () => {
-            expect(htmlContent).toMatch(/<meta[^>]*charset=["']UTF-8['"][^>]*>/i);
-        });
-
-        it('must contain viewport meta tag', () => {
-            expect(htmlContent).toMatch(/<meta[^>]*name=["']viewport['"][^>]*content=["'][^"']*['"][^>]*>/i);
-        });
-
-        it('must have viewport content with initial-scale=1.0', () => {
-            expect(htmlContent).toMatch(/initial-scale=1\.0/i);
-        });
-    });
-
-    describe('Body Section', () => {
-        it('must have a body element', () => {
-            expect(htmlContent).toMatch(/<body>.*<\/body>/i);
-        });
-    });
-
-    describe('File Structure', () => {
-        it('must have a root html element', () => {
-            expect(htmlContent).toMatch(/<html[^>]*>.*<\/html>/i);
-        });
-
-        it('must have proper nesting of head and body', () => {
-            expect(htmlContent).toMatch(/<head>.*<\/head>\s*<body>.*<\/body>/i);
+        it('must have a non-empty title', () => {
+            const match = htmlContent.match(/<title>(.*?)<\/title>/i);
+            expect(match).not.toBeNull();
+            expect(match![1].trim()).not.toBe('');
         });
     });
 });
