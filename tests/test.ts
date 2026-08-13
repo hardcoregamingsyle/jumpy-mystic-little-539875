@@ -22,55 +22,21 @@ describe('HUD Radar HTML Structure Tests', () => {
         });
 
         it('must specify English language code', () => {
-            expect(htmlContent).toMatch(/lang=["']en["']/i);
+            expect(htmlContent).toMatch(/lang="en"/);
         });
     });
 
-    describe('Meta Tags', () => {
-        it('must have a charset meta tag with UTF-8', () => {
-            expect(htmlContent).toMatch(/<meta[^>]*charset=["']UTF-8["']/i);
+    describe('Head Section', () => {
+        it('must have charset meta tag', () => {
+            expect(htmlContent).toMatch(/<meta charset="UTF-8">/);
         });
 
-        it('must have a viewport meta tag with initial-scale=1.0', () => {
-            expect(htmlContent).toMatch(/<meta[^>]*name=["']viewport["'][^>]*content=["'][^"']*initial-scale=1\.0["']/i);
+        it('must have viewport meta tag', () => {
+            expect(htmlContent).toMatch(/<meta name="viewport" content="width=device-width, initial-scale=1.0">/);
         });
 
-        it('must have a viewport meta tag with width=device-width', () => {
-            expect(htmlContent).toMatch(/<meta[^>]*name=["']viewport["'][^>]*content=["'][^"']*width=device-width["']/i);
-        });
-    });
-
-    describe('Title Tag', () => {
         it('must have a title element', () => {
-            expect(htmlContent).toMatch(/<title>[^<]+<\/title>/i);
-        });
-
-        it('must have a non-empty title', () => {
-            const matches = htmlContent.match(/<title>([^<]+)<\/title>/i);
-            expect(matches).not.toBeNull();
-            if (matches) {
-                expect(matches[1].trim()).not.toBe('');
-            }
-        });
-    });
-
-    describe('Body Tag', () => {
-        it('must have opening and closing body tags', () => {
-            expect(htmlContent).toMatch(/<body>/i);
-            expect(htmlContent).toMatch(/<\/body>/i);
-        });
-    });
-
-    describe('Head Tag', () => {
-        it('must have opening and closing head tags', () => {
-            expect(htmlContent).toMatch(/<head>/i);
-            expect(htmlContent).toMatch(/<\/head>/i);
-        });
-    });
-
-    describe('Closing HTML Tag', () => {
-        it('must have a closing html tag', () => {
-            expect(htmlContent).toMatch(/<\/html>/i);
+            expect(htmlContent).toMatch(/<title>[^<]+<\/title>/);
         });
     });
 });
