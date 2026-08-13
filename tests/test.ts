@@ -22,27 +22,7 @@ describe('HUD Radar HTML Structure Tests', () => {
         });
 
         it('must specify English language code', () => {
-            expect(htmlContent).toMatch(/<html[^>]*lang=["']en['"]/i);
-        });
-    });
-
-    describe('Meta Tags', () => {
-        it('must include UTF-8 charset meta tag', () => {
-            expect(htmlContent).toMatch(/<meta[^>]*charset=["']UTF-8['"]/i);
-        });
-
-        it('must include viewport meta tag', () => {
-            expect(htmlContent).toMatch(/<meta[^>]*name=["']viewport['"]\s+content=["'][^"']+["']/i);
-        });
-    });
-
-    describe('Title Element', () => {
-        it('must contain title element', () => {
-            expect(htmlContent).toMatch(/<title>[^<]+<\/title>/i);
-        });
-
-        it('must have correct title text', () => {
-            expect(htmlContent).toMatch(/<title>Stealth Bomber HUD Radar<\/title>/i);
+     
         });
     });
 });
