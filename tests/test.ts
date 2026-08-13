@@ -22,47 +22,42 @@ describe('HUD Radar HTML Structure Tests', () => {
         });
 
         it('must specify English language code', () => {
-            expect(htmlContent).toMatch(/<html[^>]*lang=["']en["']/i);
+            expect(htmlContent).toMatch(/<html[^>]*lang="en"/i);
         });
     });
 
     describe('Meta Tags', () => {
         it('must have charset meta tag with UTF-8', () => {
-            expect(htmlContent).toMatch(/<meta[^>]*charset=["']UTF-8["']/i);
+            expect(htmlContent).toMatch(/<meta[^>]*charset="UTF-8"/i);
         });
 
         it('must have viewport meta tag for responsive design', () => {
-            expect(htmlContent).toMatch(/<meta[^>]*name=["']viewport["'][^>]*content=["'][^"']*width=device-width[^"']*["']/i);
-        });
-
-        it('must have viewport meta tag with initial-scale=1.0', () => {
-            expect(htmlContent).toMatch(/<meta[^>]*name=["']viewport["'][^>]*content=["'][^"']*initial-scale=1.0[^"']*["']/i);
+            expect(htmlContent).toMatch(/<meta[^>]*name="viewport"[^>]*content="width=device-width, initial-scale=1.0"/i);
         });
     });
 
     describe('Title Element', () => {
         it('must have a title element', () => {
-            expect(htmlContent).toMatch(/<title>/i);
+            expect(htmlContent).toMatch(/<title>[^<]+<\/title>/i);
         });
 
-        it('must have a closing title tag', () => {
-            expect(htmlContent).toMatch(/<\/title>/i);
-        });
-
-        it('title must not be empty', () => {
-            const titleMatch = htmlContent.match(/<title>([^<]*)<\/title>/i);
+        it('must have a non-empty title', () => {
+            const titleMatch = htmlContent.match(/<title>([^<]+)<\/title>/i);
             expect(titleMatch).not.toBeNull();
-            expect(titleMatch![1].trim()).not.toBe('');
+            if (titleMatch) {
+                expect(titleMatch[1].trim().length).toBeGreaterThan(0);
+            }
         });
     });
 
-    describe('Body Tag', () => {
-        it('must have opening body tag', () => {
-            expect(htmlContent).toMatch(/<body>/i);
+    describe('Structural Integrity', () => {
+        it('must have a closing html tag', () => {
+            expect(htmlContent).toMatch(/<\/html>/i);
         });
 
-        it('must have closing body tag', () => {
-            expect(htmlContent).toMatch(/<\/body>/i);
+        it('must have a head and body section', () => {
+            expect(htmlContent).toMatch(/<head>/i);
+            expect(htmlContent).toMatch(/<body>/i);
         });
     });
 });
