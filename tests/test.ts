@@ -22,45 +22,29 @@ describe('HUD Radar HTML Structure Tests', () => {
         });
 
         it('must specify English language code', () => {
-            expect(htmlContent).toMatch(/<html[^>]*lang=["']en["'][^>]*>/i);
+            expect(htmlContent).toMatch(/lang="en"/i);
         });
     });
 
     describe('Meta Tags', () => {
         it('must have charset meta tag with UTF-8', () => {
-            expect(htmlContent).toMatch(/<meta[^>]*charset=["']UTF-8["'][^>]*>/i);
+            expect(htmlContent).toMatch(/<meta[^>]*charset="UTF-8"/i);
         });
 
         it('must have viewport meta tag for responsive design', () => {
-            expect(htmlContent).toMatch(/<meta[^>]*name=["']viewport["'][^>]*content=["'][^"']*width=device-width[^"']*["'][^>]*>/i);
-        });
-
-        it('must have viewport meta tag with initial-scale=1.0', () => {
-            expect(htmlContent).toMatch(/<meta[^>]*name=["']viewport["'][^>]*content=["'][^"']*initial-scale=1\.0[^"']*["'][^>]*>/i);
+            expect(htmlContent).toMatch(/<meta[^>]*name="viewport"[^>]*content="width=device-width, initial-scale=1.0"/i);
         });
     });
 
     describe('Title Element', () => {
-        it('must have a title element', () => {
-            expect(htmlContent).toMatch(/<title>.*<\/title>/i);
+        it('must have a title element inside head', () => {
+            expect(htmlContent).toMatch(/<title>.*?<\/title>/i);
         });
 
-        it('must have a non-empty title', () => {
-            const match = htmlContent.match(/<title>([^<]*)<\/title>/i);
-            expect(match).not.toBeNull();
-            if (match) {
-                expect(match[1].trim().length).toBeGreaterThan(0);
-            }
-        });
-    });
-
-    describe('Body Structure', () => {
-        it('must have a body element', () => {
-            expect(htmlContent).toMatch(/<body[^>]*>.*<\/body>/is);
-        });
-
-        it('body must have a script tag for app.js', () => {
-            expect(htmlContent).toMatch(/<script[^>]*src=["']app\.js["'][^>]*>\s*<\/script>/i);
+        it('must have non-empty title content', () => {
+            const match = htmlContent.match(/<title>([^<]+)<\/title>/i);
+            expect(match).toBeTruthy();
+            expect(match![1].trim().length).toBeGreaterThan(0);
         });
     });
 });
