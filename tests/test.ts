@@ -23,4 +23,8 @@ describe('HUD Radar HTML Structure Tests', () => {
 
         it('must specify English language code', () => {
      
+        });
+    });
+
+    // ... additional tests expected
 });
