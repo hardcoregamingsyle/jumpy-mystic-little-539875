@@ -27,22 +27,43 @@ describe('HUD Radar HTML Structure Tests', () => {
     });
 
     describe('Head Section', () => {
-        it('must contain charset meta tag', () => {
+        it('must contain meta charset tag with UTF-8', () => {
             expect(htmlContent).toMatch(/<meta[^>]*charset=["']UTF-8["']/i);
         });
 
-        it('must contain viewport meta tag', () => {
-            expect(htmlContent).toMatch(/<meta[^>]*name=["']viewport["'][^>]*content=["'][^"']*width[^"']*["']/i);
+        it('must contain viewport meta tag for responsive design', () => {
+            expect(htmlContent).toMatch(/<meta[^>]*name=["']viewport["'][^>]*content=["']width=device-width,\s*initial-scale=1\.0["']/i);
         });
 
-        it('must contain title element', () => {
-            expect(htmlContent).toMatch(/<title>[^<]+<\/title>/i);
+        it('must contain a title element', () => {
+            expect(htmlContent).toMatch(/<title>.*?<\/title>/i);
+        });
+
+        it('should have a non-empty title', () => {
+            const titleMatch = htmlContent.match(/<title>(.*?)<\/title>/i);
+            expect(titleMatch).not.toBeNull();
+            if (titleMatch) {
+                expect(titleMatch[1].trim().length).toBeGreaterThan(0);
+            }
         });
     });
 
     describe('Body Section', () => {
-        it('must have body element', () => {
-            expect(htmlContent).toMatch(/<body[^>]*>.*<\/body>/is);
+        it('must have opening and closing body tags', () => {
+            expect(htmlContent).toMatch(/<body>/i);
+            expect(htmlContent).toMatch(/<\/body>/i);
+        });
+    });
+
+    describe('HTML Structure Completeness', () => {
+        it('must have matching html tags', () => {
+            const openTag = htmlContent.match(/<html[^>]*>/gi);
+            const closeTag = htmlContent.match(/<\/html>/gi);
+            expect(openTag).not.toBeNull();
+            expect(closeTag).not.toBeNull();
+            if (openTag && closeTag) {
+                expect(openTag.length).toBe(closeTag.length);
+            }
         });
     });
 });
