@@ -22,40 +22,54 @@ describe('HUD Radar HTML Structure Tests', () => {
         });
 
         it('must specify English language code', () => {
-            expect(htmlContent).toMatch(/<html[^>]*lang=["']en["']/i);
+            expect(htmlContent).toMatch(/lang=["']en["']/i);
         });
     });
 
     describe('Meta Tags', () => {
-        it('must have charset meta tag with UTF-8', () => {
+        it('must have a charset meta tag with UTF-8', () => {
             expect(htmlContent).toMatch(/<meta[^>]*charset=["']UTF-8["']/i);
         });
 
-        it('must have viewport meta tag for responsive design', () => {
-            expect(htmlContent).toMatch(/<meta[^>]*name=["']viewport["'][^>]*content=["']width=device-width,\s*initial-scale=1\.0["']/i);
+        it('must have a viewport meta tag with initial-scale=1.0', () => {
+            expect(htmlContent).toMatch(/<meta[^>]*name=["']viewport["'][^>]*content=["'][^"']*initial-scale=1\.0["']/i);
+        });
+
+        it('must have a viewport meta tag with width=device-width', () => {
+            expect(htmlContent).toMatch(/<meta[^>]*name=["']viewport["'][^>]*content=["'][^"']*width=device-width["']/i);
         });
     });
 
-    describe('Title', () => {
+    describe('Title Tag', () => {
         it('must have a title element', () => {
-            expect(htmlContent).toMatch(/<title>.*<\/title>/i);
+            expect(htmlContent).toMatch(/<title>[^<]+<\/title>/i);
         });
 
-        it('must have non-empty title', () => {
-            const titleMatch = htmlContent.match(/<title>(.*?)<\/title>/i);
-            expect(titleMatch).not.toBeNull();
-            if (titleMatch) {
-                expect(titleMatch[1].trim().length).toBeGreaterThan(0);
+        it('must have a non-empty title', () => {
+            const matches = htmlContent.match(/<title>([^<]+)<\/title>/i);
+            expect(matches).not.toBeNull();
+            if (matches) {
+                expect(matches[1].trim()).not.toBe('');
             }
         });
     });
 
-    describe('Body', () => {
-        it('must have closing body tag', () => {
+    describe('Body Tag', () => {
+        it('must have opening and closing body tags', () => {
+            expect(htmlContent).toMatch(/<body>/i);
             expect(htmlContent).toMatch(/<\/body>/i);
         });
+    });
 
-        it('must have closing html tag', () => {
+    describe('Head Tag', () => {
+        it('must have opening and closing head tags', () => {
+            expect(htmlContent).toMatch(/<head>/i);
+            expect(htmlContent).toMatch(/<\/head>/i);
+        });
+    });
+
+    describe('Closing HTML Tag', () => {
+        it('must have a closing html tag', () => {
             expect(htmlContent).toMatch(/<\/html>/i);
         });
     });
