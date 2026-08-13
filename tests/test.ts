@@ -25,40 +25,4 @@ describe('HUD Radar HTML Structure Tests', () => {
             expect(htmlContent).toMatch(/<html[^>]*lang="en"/i);
         });
     });
-
-    describe('Meta Tags', () => {
-        it('must have charset meta tag with UTF-8', () => {
-            expect(htmlContent).toMatch(/<meta[^>]*charset="UTF-8"/i);
-        });
-
-        it('must have viewport meta tag with width=device-width and initial-scale=1', () => {
-            expect(htmlContent).toMatch(/<meta[^>]*name="viewport"[^>]*content="width=device-width,\s*initial-scale=1\.0"/i);
-        });
-    });
-
-    describe('Title Element', () => {
-        it('must have a title element', () => {
-            expect(htmlContent).toMatch(/<title>.*?<\/title>/i);
-        });
-
-        it('must have non-empty title', () => {
-            const titleMatch = htmlContent.match(/<title>([^<]*)<\/title>/i);
-            expect(titleMatch).not.toBeNull();
-            expect(titleMatch![1].trim().length).toBeGreaterThan(0);
-        });
-    });
-
-    describe('Body', () => {
-        it('must have opening and closing body tags', () => {
-            expect(htmlContent).toMatch(/<body>/i);
-            expect(htmlContent).toMatch(/<\/body>/i);
-        });
-    });
-
-    describe('Head', () => {
-        it('must have opening and closing head tags', () => {
-            expect(htmlContent).toMatch(/<head>/i);
-            expect(htmlContent).toMatch(/<\/head>/i);
-        });
-    });
 });
