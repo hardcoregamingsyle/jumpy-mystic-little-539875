@@ -22,21 +22,37 @@ describe('HUD Radar HTML Structure Tests', () => {
         });
 
         it('must specify English language code', () => {
-            expect(htmlContent).toMatch(/lang=["']en["']/i);
+            expect(htmlContent).toMatch(/<html[^>]*lang="en"/i);
         });
     });
 
     describe('Meta Tags', () => {
-        it('must have charset meta tag with UTF-8', () => {
-            expect(htmlContent).toMatch(/<meta[^>]*charset=["']UTF-8["']/i);
+        it('must have charset UTF-8 meta tag', () => {
+            expect(htmlContent).toMatch(/<meta[^>]*charset="UTF-8"/i);
         });
 
-        it('must have viewport meta tag for responsive design', () => {
-            expect(htmlContent).toMatch(/<meta[^>]*name=["']viewport["'][^>]*content=["'][^"']*width=device-width[^"']*["']/i);
+        it('must have viewport meta tag with width=device-width and initial-scale=1', () => {
+            expect(htmlContent).toMatch(/<meta[^>]*name="viewport"[^>]*content="width=device-width, initial-scale=1.0"/i);
+        });
+    });
+
+    describe('Title Element', () => {
+        it('must have a title element with accurate project name', () => {
+            expect(htmlContent).toMatch(/<title>Stealth Bomber HUD Radar<\/title>/i);
+        });
+    });
+
+    describe('Closing Tags', () => {
+        it('must have closing html tag', () => {
+            expect(htmlContent).toMatch(/<\/html>/i);
         });
 
-        it('must have title element', () => {
-            expect(htmlContent).toMatch(/<title>[^<]+<\/title>/i);
+        it('must have closing head tag', () => {
+            expect(htmlContent).toMatch(/<\/head>/i);
+        });
+
+        it('must have closing body tag', () => {
+            expect(htmlContent).toMatch(/<\/body>/i);
         });
     });
 });
