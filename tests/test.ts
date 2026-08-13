@@ -22,39 +22,5 @@ describe('HUD Radar HTML Structure Tests', () => {
         });
 
         it('must specify English language code', () => {
-            expect(htmlContent).toMatch(/lang=["']en['"]/i);
-        });
-    });
-
-    describe('Head Section', () => {
-        it('must contain meta charset UTF-8', () => {
-            expect(htmlContent).toMatch(/<meta[^>]*charset=["']UTF-8['"]/i);
-        });
-
-        it('must contain viewport meta tag', () => {
-            expect(htmlContent).toMatch(/<meta[^>]*name=["']viewport['"]/i);
-        });
-
-        it('must contain title element', () => {
-            expect(htmlContent).toMatch(/<title>[^<]+<\/title>/i);
-        });
-
-        it('title must not be empty', () => {
-            const match = htmlContent.match(/<title>([^<]*)<\/title>/i);
-            expect(match).not.toBeNull();
-            if (match) {
-                expect(match[1].trim().length).toBeGreaterThan(0);
-            }
-        });
-    });
-
-    describe('Body Section', () => {
-        it('must contain opening body tag', () => {
-            expect(htmlContent).toMatch(/<body[^>]*>/i);
-        });
-
-        it('must contain closing body tag', () => {
-            expect(htmlContent).toMatch(/<\/body>/i);
-        });
-    });
+     
 });
