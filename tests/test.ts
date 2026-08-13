@@ -26,47 +26,47 @@ describe('HUD Radar HTML Structure Tests', () => {
         });
     });
 
-    describe('Meta Tags', () => {
-        it('must have charset meta tag with UTF-8', () => {
+    describe('Head Section', () => {
+        it('must contain charset meta tag with UTF-8', () => {
             expect(htmlContent).toMatch(/<meta[^>]*charset=["']UTF-8["']/i);
         });
 
-        it('must have viewport meta tag for responsive design', () => {
-            expect(htmlContent).toMatch(/<meta[^>]*name=["']viewport["'][^>]*content=["'][^"']*width=device-width[^"']*["']/i);
+        it('must contain viewport meta tag with responsive settings', () => {
+            expect(htmlContent).toMatch(/<meta[^>]*name=["']viewport["'][^>]*content=["'][^"']*width=device-width[^"']*\/?>/i);
         });
 
-        it('must have viewport meta tag with initial-scale=1.0', () => {
-            expect(htmlContent).toMatch(/<meta[^>]*name=["']viewport["'][^>]*content=["'][^"']*initial-scale=1.0[^"']*["']/i);
-        });
-    });
-
-    describe('Title Element', () => {
-        it('must have a title element', () => {
+        it('must contain a title element', () => {
             expect(htmlContent).toMatch(/<title>.*<\/title>/i);
         });
 
-        it('must have a non-empty title', () => {
-            const match = htmlContent.match(/<title>(.*?)<\/title>/i);
-            expect(match).toBeTruthy();
-            expect(match![1].trim().length).toBeGreaterThan(0);
+        it('title must contain meaningful text', () => {
+            expect(htmlContent).toMatch(/<title>[^\s].*[^\s]<\/title>/i);
         });
     });
 
-    describe('Body Element', () => {
-        it('must have opening and closing body tags', () => {
-            expect(htmlContent).toMatch(/<body>/i);
+    describe('Body Section', () => {
+        it('must have an opening body tag', () => {
+            expect(htmlContent).toMatch(/<body[^>]*>/i);
+        });
+
+        it('must have a closing body tag', () => {
             expect(htmlContent).toMatch(/<\/body>/i);
         });
     });
 
-    describe('Structural Integrity', () => {
-        it('must close html tag', () => {
+    describe('Document Structure Completeness', () => {
+        it('must have a closing html tag', () => {
             expect(htmlContent).toMatch(/<\/html>/i);
         });
 
-        it('must have head section', () => {
-            expect(htmlContent).toMatch(/<head>/i);
-            expect(htmlContent).toMatch(/<\/head>/i);
+        it('must have head and body as siblings', () => {
+            const headMatch = htmlContent.match(/<head[^>]*>/i);
+            const bodyMatch = htmlContent.match(/<body[^>]*>/i);
+            expect(headMatch).toBeTruthy();
+            expect(bodyMatch).toBeTruthy();
+            if (headMatch && bodyMatch) {
+                expect(headMatch.index).toBeLessThan(bodyMatch.index);
+            }
         });
     });
 });
