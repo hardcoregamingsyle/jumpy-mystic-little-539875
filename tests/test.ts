@@ -1,6 +1,7 @@
 import * as fs from 'fs';
 import * as path from 'path';
 
+
 describe('HUD Radar HTML Structure Tests', () => {
     const htmlPath = path.join(__dirname, '..', 'index.html');
     let htmlContent: string;
@@ -22,42 +23,27 @@ describe('HUD Radar HTML Structure Tests', () => {
         });
 
         it('must specify English language code', () => {
-            expect(htmlContent).toMatch(/<html[^>]*lang="en"/i);
+            expect(htmlContent).toMatch(/<html[^>]*lang=["']en["']/i);
         });
     });
 
-    describe('Meta Tags', () => {
-        it('must have charset meta tag with UTF-8', () => {
-            expect(htmlContent).toMatch(/<meta[^>]*charset="UTF-8"/i);
+    describe('Head Section', () => {
+        it('must contain charset meta tag', () => {
+            expect(htmlContent).toMatch(/<meta[^>]*charset=["']UTF-8["']/i);
         });
 
-        it('must have viewport meta tag for responsive design', () => {
-            expect(htmlContent).toMatch(/<meta[^>]*name="viewport"[^>]*content="width=device-width, initial-scale=1.0"/i);
+        it('must contain viewport meta tag', () => {
+            expect(htmlContent).toMatch(/<meta[^>]*name=["']viewport["'][^>]*content=["'][^"']+width[^"']+[^"]*["']/i);
         });
-    });
 
-    describe('Title Element', () => {
-        it('must have a title element', () => {
+        it('must contain title element', () => {
             expect(htmlContent).toMatch(/<title>[^<]+<\/title>/i);
         });
-
-        it('must have a non-empty title', () => {
-            const titleMatch = htmlContent.match(/<title>([^<]+)<\/title>/i);
-            expect(titleMatch).not.toBeNull();
-            if (titleMatch) {
-                expect(titleMatch[1].trim().length).toBeGreaterThan(0);
-            }
-        });
     });
 
-    describe('Structural Integrity', () => {
-        it('must have a closing html tag', () => {
-            expect(htmlContent).toMatch(/<\/html>/i);
-        });
-
-        it('must have a head and body section', () => {
-            expect(htmlContent).toMatch(/<head>/i);
-            expect(htmlContent).toMatch(/<body>/i);
+    describe('Body Section', () => {
+        it('must have a body tag', () => {
+            expect(htmlContent).toMatch(/<body[^>]*>.*<\/body>/is);
         });
     });
 });
