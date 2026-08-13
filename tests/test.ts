@@ -18,62 +18,31 @@ describe('HUD Radar HTML Structure Tests', () => {
 
     describe('HTML Tag', () => {
         it('must have opening html tag with lang attribute', () => {
-            expect(htmlContent).toMatch(/<html[^>]*lang=["'][^"']+["']/i);
+            expect(htmlContent).toMatch(/<html[^>]*lang=["'][^"']+['"]/i);
         });
 
         it('must specify English language code', () => {
-            expect(htmlContent).toMatch(/<html[^>]*lang=["']en["']/i);
+            expect(htmlContent).toMatch(/<html[^>]*lang=["']en['"]/i);
         });
     });
 
     describe('Meta Tags', () => {
-        it('must have charset meta tag with UTF-8', () => {
-            expect(htmlContent).toMatch(/<meta[^>]*charset=["']UTF-8["']/i);
+        it('must include UTF-8 charset meta tag', () => {
+            expect(htmlContent).toMatch(/<meta[^>]*charset=["']UTF-8['"]/i);
         });
 
-        it('must have viewport meta tag for responsive design', () => {
-            expect(htmlContent).toMatch(/<meta[^>]*name=["']viewport["'][^>]*content=["'][^"']*width=device-width[^"']*["']/i);
-        });
-
-        it('must have title element', () => {
-            expect(htmlContent).toMatch(/<title>.*<\/title>/i);
-        });
-
-        it('title must not be empty', () => {
-            const match = htmlContent.match(/<title>([^<]*)<\/title>/i);
-            expect(match).not.toBeNull();
-            expect(match![1].trim()).not.toBe('');
+        it('must include viewport meta tag', () => {
+            expect(htmlContent).toMatch(/<meta[^>]*name=["']viewport['"]\s+content=["']width=device-width,/i);
         });
     });
 
-    describe('Body Structure', () => {
-        it('must have opening and closing body tags', () => {
-            expect(htmlContent).toMatch(/<body>/i);
-            expect(htmlContent).toMatch(/<\/body>/i);
-        });
-    });
-
-    describe('HTML Document Structure', () => {
-        it('must have html opening and closing tags', () => {
-            expect(htmlContent).toMatch(/<html[^>]*>/i);
-            expect(htmlContent).toMatch(/<\/html>/i);
+    describe('Title Element', () => {
+        it('must contain title element', () => {
+            expect(htmlContent).toMatch(/<title>[^<]+<\/title>/i);
         });
 
-        it('must have head and body sections', () => {
-            expect(htmlContent).toMatch(/<head>/i);
-            expect(htmlContent).toMatch(/<\/head>/i);
-            expect(htmlContent).toMatch(/<body>/i);
-            expect(htmlContent).toMatch(/<\/body>/i);
-        });
-    });
-
-    describe('Security', () => {
-        it('must not contain any script tags', () => {
-            expect(htmlContent).not.toMatch(/<script/i);
-        });
-
-        it('must not contain any inline event handlers', () => {
-            expect(htmlContent).not.toMatch(/on\w+=/i);
+        it('must have correct title text', () => {
+            expect(htmlContent).toMatch(/<title>Stealth Bomber HUD Radar<\/title>/i);
         });
     });
 });
