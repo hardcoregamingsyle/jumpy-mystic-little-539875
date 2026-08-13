@@ -6,7 +6,7 @@
   "scripts": {
     "test": "jest --coverage",
     "test:watch": "jest --watch",
-    "start": "npx http-server . -p 3000 -o"
+    "start": "npx http-server . -p 3000 -a 0.0.0.0"
   },
   "keywords": ["three.js", "radar", "hud", "visualization"],
   "author": "Thalamus Code Project",

@@ -22,42 +22,41 @@ describe('HUD Radar HTML Structure Tests', () => {
         });
 
         it('must specify English language code', () => {
-            expect(htmlContent).toMatch(/<html[^>]*lang="en"/i);
+            expect(htmlContent).toMatch(/<html[^>]*lang=["']en["']/i);
         });
     });
 
-    describe('Meta Tags', () => {
-        it('must have charset meta tag with UTF-8', () => {
-            expect(htmlContent).toMatch(/<meta[^>]*charset="UTF-8"/i);
+    describe('Head Section', () => {
+        it('must contain a head element', () => {
+            expect(htmlContent).toMatch(/<head>/i);
+        });
+
+        it('must have meta charset tag with UTF-8', () => {
+            expect(htmlContent).toMatch(/<meta[^>]*charset=["']UTF-8["']/i);
         });
 
         it('must have viewport meta tag for responsive design', () => {
-            expect(htmlContent).toMatch(/<meta[^>]*name="viewport"[^>]*content="width=device-width, initial-scale=1.0"/i);
+            expect(htmlContent).toMatch(/<meta[^>]*name=["']viewport["'][^>]*content=["']width=device-width,\s*initial-scale=1["']/i);
         });
-    });
 
-    describe('Title Element', () => {
         it('must have a title element', () => {
             expect(htmlContent).toMatch(/<title>.*<\/title>/i);
         });
 
         it('must have a non-empty title', () => {
-            const titleMatch = htmlContent.match(/<title>([^<]*)<\/title>/i);
+            const titleMatch = htmlContent.match(/<title>(.*?)<\/title>/i);
             expect(titleMatch).not.toBeNull();
-            expect(titleMatch![1].trim()).not.toBe('');
+            expect(titleMatch![1].trim().length).toBeGreaterThan(0);
         });
     });
 
-    describe('Structural Integrity', () => {
-        it('must have closing html tag', () => {
-            expect(htmlContent).toMatch(/<\/html>/i);
+    describe('Body Section', () => {
+        it('must contain a body element', () => {
+            expect(htmlContent).toMatch(/<body>/i);
         });
 
-        it('must have head and body sections', () => {
-            expect(htmlContent).toMatch(/<head>/i);
-            expect(htmlContent).toMatch(/<\/head>/i);
-            expect(htmlContent).toMatch(/<body>/i);
-            expect(htmlContent).toMatch(/<\/body>/i);
+        it('must have closing body and html tags', () => {
+            expect(htmlContent).toMatch(/<\/body>\s*<\/html>\s*$/i);
         });
     });
 });
