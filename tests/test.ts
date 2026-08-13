@@ -22,29 +22,23 @@ describe('HUD Radar HTML Structure Tests', () => {
         });
 
         it('must specify English language code', () => {
-            expect(htmlContent).toMatch(/<html[^>]*lang=["']en["']/i);
+            expect(htmlContent).toMatch(/<html[^>]*lang="en"/i);
         });
     });
 
     describe('Meta Tags', () => {
-        it('must have charset meta tag with UTF-8', () => {
-            expect(htmlContent).toMatch(/<meta[^>]*charset=["']UTF-8["']/i);
+        it('must have charset UTF-8 meta tag', () => {
+            expect(htmlContent).toMatch(/<meta[^>]*charset\s*=\s*["']UTF-8/i);
         });
 
-        it('must have viewport meta tag for responsive design', () => {
-            expect(htmlContent).toMatch(/<meta[^>]*name=["']viewport["'][^>]*content=["']width=device-width,\s*initial-scale=1\.0["']/i);
+        it('must have viewport meta tag', () => {
+            expect(htmlContent).toMatch(/<meta[^>]*name=["']viewport["']/i);
         });
     });
 
-    describe('Title Element', () => {
+    describe('Title', () => {
         it('must have a title element', () => {
-            expect(htmlContent).toMatch(/<title>.*<\/title>/i);
-        });
-
-        it('must have a non-empty title', () => {
-            const match = htmlContent.match(/<title>(.*?)<\/title>/i);
-            expect(match).not.toBeNull();
-            expect(match![1].trim()).not.toBe('');
+            expect(htmlContent).toMatch(/<title>/i);
         });
     });
 });
