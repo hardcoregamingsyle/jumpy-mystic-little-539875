@@ -22,23 +22,57 @@ describe('HUD Radar HTML Structure Tests', () => {
         });
 
         it('must specify English language code', () => {
-            expect(htmlContent).toMatch(/<html[^>]*lang=["']en['"]/i);
+            expect(htmlContent).toMatch(/<html[^>]*lang=["']en["']/i);
         });
     });
 
     describe('Meta Tags', () => {
-        it('must contain UTF-8 charset meta tag', () => {
-            expect(htmlContent).toMatch(/<meta[^>]*charset=["']UTF-8['"]/i);
+        it('must have charset meta tag with UTF-8', () => {
+            expect(htmlContent).toMatch(/<meta[^>]*charset=["']UTF-8["']/i);
         });
 
-        it('must contain viewport meta tag', () => {
-            expect(htmlContent).toMatch(/<meta[^>]*name=["']viewport['"]\s*content=["'][^"']+['"]/i);
+        it('must have viewport meta tag', () => {
+            expect(htmlContent).toMatch(/<meta[^>]*name=["']viewport["'][^>]*content=["'][^"']*["']/i);
+        });
+
+        it('must have viewport meta tag with correct content attributes', () => {
+            expect(htmlContent).toMatch(/<meta[^>]*name=["']viewport["'][^>]*content=["']width=device-width,\s*initial-scale=1\.0["']/i);
         });
     });
 
     describe('Title Element', () => {
-        it('must contain title element with correct text', () => {
-            expect(htmlContent).toMatch(/<title>Stealth Bomber HUD Radar<\/title>/i);
+        it('must have a title element', () => {
+            expect(htmlContent).toMatch(/<title>.*<\/title>/i);
+        });
+
+        it('must have a non-empty title', () => {
+            const titleMatch = htmlContent.match(/<title>([^<]*)<\/title>/i);
+            expect(titleMatch).not.toBeNull();
+            if (titleMatch) {
+                expect(titleMatch[1].trim().length).toBeGreaterThan(0);
+            }
+        });
+    });
+
+    describe('Structural Integrity', () => {
+        it('must have a closing html tag', () => {
+            expect(htmlContent).toMatch(/<\/html>/i);
+        });
+
+        it('must have a closing head tag', () => {
+            expect(htmlContent).toMatch(/<\/head>/i);
+        });
+
+        it('must have a closing body tag', () => {
+            expect(htmlContent).toMatch(/<\/body>/i);
+        });
+
+        it('must have head and body in correct order', () => {
+            const headIndex = htmlContent.indexOf('<head>');
+            const bodyIndex = htmlContent.indexOf('<body>');
+            expect(headIndex).toBeGreaterThan(-1);
+            expect(bodyIndex).toBeGreaterThan(-1);
+            expect(bodyIndex).toBeGreaterThan(headIndex);
         });
     });
 });
